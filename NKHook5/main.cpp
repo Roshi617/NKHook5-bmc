@@ -5,7 +5,7 @@
 #include <Extensions/ExtensionManager.h>
 #include <Logging/Logger.h>
 
-#include "Extensions/StatusEffect/StatusDefinitionsExt.h"
+//#include "Extensions/StatusEffect/StatusDefinitionsExt.h"
 #include "Patches/PatchManager.h"
 #include "Signatures/Signature.h"
 
