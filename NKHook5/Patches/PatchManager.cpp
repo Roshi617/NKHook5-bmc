@@ -1,7 +1,7 @@
 #include "PatchManager.h"
 #include <iostream>
 
-#include "CApplyStatusEffectTask/Fire.h"
+//#include "CApplyStatusEffectTask/Fire.h"
 #include "CBaseFileIO/FileExists.h"
 #include "CBaseFileIO/OpenFile.h"
 #include "CBasePositionableObject/Constructor.h"
