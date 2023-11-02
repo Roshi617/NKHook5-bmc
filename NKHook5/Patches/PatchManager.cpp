@@ -45,7 +45,7 @@ using namespace NKHook5::Patches;
 
 void PatchManager::ApplyAll()
 {
-    PatchManager::ApplyPatch(new CApplyStatusEffectTask::Fire());
+    //PatchManager::ApplyPatch(new CApplyStatusEffectTask::Fire());
     PatchManager::ApplyPatch(new CBaseFileIO::FileExists());
     PatchManager::ApplyPatch(new CBaseFileIO::OpenFile());
     PatchManager::ApplyPatch(new CBasePositionableObject::Constructor());
