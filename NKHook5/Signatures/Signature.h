@@ -8,8 +8,8 @@ namespace NKHook5 {
 		enum class Sigs {
 			/* CApp */
 			/* CApplyStatusEffectTask */
-			CApplyStatusEffectTask_VTable,
-			CApplyStatusEffectTask_Fire,
+			//CApplyStatusEffectTask_VTable,
+			//CApplyStatusEffectTask_Fire,
 			/* CAssetBag */
 			/* CBaseButton */
 			CBaseButton_VTable,
@@ -28,8 +28,8 @@ namespace NKHook5 {
 			CBaseScreen_StartUsingAsset,
 			/* CBaseTower */
 			/* CBloon */
-			CBloon_ApplyEffect,
-			CBloon_Update,
+			//CBloon_ApplyEffect,
+			//CBloon_Update,
 			/* CBloonFactory */
 			CBloonFactory_CCTOR,
 			/* CBloonsBaseScreen */
@@ -58,8 +58,8 @@ namespace NKHook5 {
 			CGameScreen_Init,
 			/* CGameSystemPointers */
 			/* CGlueStatusEffect */
-			CGlueStatusEffect_VTable,
-			CGlueStatusEffect_CCTOR,
+			//CGlueStatusEffect_VTable,
+			//CGlueStatusEffect_CCTOR,
 			/* CLoc */
 			CLoc_FindText,
 			CLoc_GetText,
