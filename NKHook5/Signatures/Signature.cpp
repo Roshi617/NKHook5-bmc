@@ -57,8 +57,9 @@ void Signatures::FindAll() {
 	pointerMap[Sigs::CBasePositionableObject_AssignParent] = Signatures::FindFirst(1,
 		"55 8b ec 56 8b f1 57 8b 7d ?? 8b 46 ?? 3b c7 74 ?? 85 c0 74 ?? e8 ?? ?? ?? ?? 85 ff 74 ?? 56 8b cf e8 ?? ?? ?? ?? 80 7f ?? ?? 75 ?? 8b 06 8b ce 6a ?? ff 90 ?? ?? ?? ?? 8b ce e8 ?? ?? ?? ?? 5f 5e 5d c2 ?? ?? cc cc cc cc cc cc cc cc cc cc cc 80 79"
 	);
+	//bmc SetComplete
 	pointerMap[Sigs::CBasePositionableObject_SetComplete] = Signatures::FindFirst(1,
-		"?? 79 ?? ?? 75 ?? 56 57 8D"
+		"80 79 78 00 75 27 56 57 8d 79 14 c6 41 78 01 8b 37 3b f7 74 16 85 f6 74 05 8d 4e fc eb 02 33 c9 e8 db ff ff ff 8b 36 3b f7 75 ea 5f 5e c3"
 	);
 	/* CBaseScreen */
 	pointerMap[Sigs::CBaseScreen_CCTOR] = Signatures::FindFirst(1,
