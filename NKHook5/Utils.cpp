@@ -41,7 +41,8 @@ size_t Utils::FindPattern(std::string_view pattern)
 		const auto result = hat::find_pattern(sig.value(), ".text");
 		return result.has_result() ? reinterpret_cast<uintptr_t>(result.get()) : NULL;
 	} else {
-		Print(LogLevel::ERR, "Sig failed with '%s' (%s)", pattern.data(), magic_enum::enum_name<hat::signature_parse_error>(sig.error()).data());
+		//Print(LogLevel::ERR, "Sig failed with '%s' (%s)", pattern.data(), magic_enum::enum_name<hat::signature_parse_error>(sig.error()).data());
+		Print(LogLevel::ERR, "Sig failed with '%s' ", pattern.data());
 	}
 	return 0;
 }
@@ -55,7 +56,8 @@ size_t Utils::FindPattern(size_t rangeStart, size_t rangeEnd, std::string_view p
 				sig.value());
 		return result.has_result() ? reinterpret_cast<uintptr_t>(result.get()) : NULL;
 	} else {
-		Print(LogLevel::ERR, "Sig failed with '%s' (%s)", pattern.data(), magic_enum::enum_name<hat::signature_parse_error>(sig.error()).data());
+		//Print(LogLevel::ERR, "Sig failed with '%s' (%s)", pattern.data(), magic_enum::enum_name<hat::signature_parse_error>(sig.error()).data());
+		Print(LogLevel::ERR, "Sig failed with '%s' ", pattern.data());
 	}
 	return 0;
 }

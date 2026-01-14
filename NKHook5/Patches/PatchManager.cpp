@@ -61,13 +61,13 @@ void PatchManager::ApplyAll()
     PatchManager::ApplyPatch(new CBloonsTD5Game::Constructor());
     PatchManager::ApplyPatch(new CBloonsTD5Game::LoadAssets());
     PatchManager::ApplyPatch(new CCollectableTask::Clone());
-    PatchManager::ApplyPatch(new CCollectableTask::Update());
+    //PatchManager::ApplyPatch(new CCollectableTask::Update());
 	PatchManager::ApplyPatch(new CDGSplashScreen::Init());
 	PatchManager::ApplyPatch(new CEffectTask::FireAt());
     PatchManager::ApplyPatch(new CEffectTask::ReadTask_Patch());
-    PatchManager::ApplyPatch(new CFlagStringConvertor::FlagToString());
+    //PatchManager::ApplyPatch(new CFlagStringConvertor::FlagToString());
     PatchManager::ApplyPatch(new CFlagStringConvertor::LoadCategory());
-    PatchManager::ApplyPatch(new CFlagStringConvertor::StringToFlag());
+    //PatchManager::ApplyPatch(new CFlagStringConvertor::StringToFlag());
     //PatchManager::ApplyPatch(new CGameScreen::Init());
     PatchManager::ApplyPatch(new CPlayerProfileV1::InternalLoad());
     //PatchManager::ApplyPatch(new CPlayerProfileV1::Save());
