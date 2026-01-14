@@ -1,17 +1,13 @@
 #include "PngPhoto.h"
-#include "../Logging/Logger.h"
-#include "../Sprites/Images/MTImage.h"
 
-#define STB_IMAGE_IMPLEMENTATION
-#define STB_IMAGE_WRITE_IMPLEMENTATION
 #include <stb_image.h>
 #include <stb_image_write.h>
+
+#include <mutex>
 
 using namespace Common;
 using namespace Common::Files;
 using namespace Common::Files::Images;
-using namespace Common::Logging;
-using namespace Common::Logging::Logger;
 using namespace Common::Sprites;
 using namespace Common::Sprites::Images;
 namespace fs = std::filesystem;

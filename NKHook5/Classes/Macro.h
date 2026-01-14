@@ -1,22 +1,56 @@
 #pragma once
 
-#include "../Utils.h"
 #include "../Signatures/Signature.h"
 
-template<typename T, typename... P>
-T FastCall(NKHook5::Signatures::Sigs sig, P... params) {
-	static void* sigFunc = NKHook5::Signatures::GetAddressOf(sig);
-	return ((T(__fastcall*)(P...))sigFunc)(params...);
+//Utils to extract type information
+template<typename... Args>
+struct pack { };
+template<typename class_t = std::false_type>
+struct extract_type
+{
+	typedef class_t type;
+};
+template<typename return_t, typename class_t, typename... args_t>
+struct extract_type<return_t(class_t::*)(args_t...)>
+{
+	typedef class_t type;
+	typedef return_t ret;
+	typedef pack<args_t...> args;
 };
 
-template<typename T, typename... P>
-T ThisCall(NKHook5::Signatures::Sigs sig, P... params) {
+template<NKHook5::Signatures::Sigs sig, typename ret_t, typename... args_t>
+ret_t FastCall(args_t... params) {
 	static void* sigFunc = NKHook5::Signatures::GetAddressOf(sig);
-	return ((T(__thiscall*)(P...))sigFunc)(params...);
+	return ((ret_t(__fastcall*)(args_t...))sigFunc)(params...);
 };
 
-template<typename T, typename... P>
-T CdeclCall(NKHook5::Signatures::Sigs sig, P... params) {
+template<NKHook5::Signatures::Sigs sig, auto fn, typename func_t = decltype(fn), typename extracted_t = extract_type<func_t>, typename class_t = extracted_t::class_t, typename ret_t = extracted_t::ret, typename... args_t>
+ret_t ThisCall(class_t* self, args_t... args) {
+	static auto addr = NKHook5::Signatures::GetAddressOf(sig);
+	static auto func = *reinterpret_cast<func_t*>(&addr);
+	return (self->*func)(args...);
+};
+
+template<NKHook5::Signatures::Sigs sig, typename ret_t, typename class_t, typename... args_t>
+ret_t ThisCall_NonMember(class_t* self, args_t... args) {
+	using func_t = ret_t(__thiscall*)(class_t*, args_t...);
+
+	static auto addr = NKHook5::Signatures::GetAddressOf(sig);
+	static auto func = *reinterpret_cast<func_t*>(&addr);
+	return func(self, args...);
+};
+
+template<NKHook5::Signatures::Sigs sig, typename class_t, typename... args_t>
+void ThisConstruct(class_t* self, args_t... args) {
+	using func_t = void(__thiscall*)(class_t*, args_t...);
+
+	static auto addr = NKHook5::Signatures::GetAddressOf(sig);
+	static auto func = *reinterpret_cast<func_t*>(&addr);
+	return func(self, args...);
+}
+
+template<NKHook5::Signatures::Sigs sig, typename ret_t, typename... args_t>
+ret_t CdeclCall(args_t... params) {
 	static void* sigFunc = NKHook5::Signatures::GetAddressOf(sig);
-	return ((T(__cdecl*)(P...))sigFunc)(params...);
+	return ((ret_t(__cdecl*)(args_t...))sigFunc)(params...);
 };

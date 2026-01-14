@@ -15,7 +15,7 @@ using namespace Common;
 using namespace Common::Logging;
 using namespace Common::Logging::Logger;
 
-auto initialize() -> int {
+int initialize() {
 #ifdef _DEBUG
     Print(LogLevel::INFO, "Press enter to launch NKH...");
     std::cin.get();
@@ -53,7 +53,7 @@ auto initialize() -> int {
 
     Print(LogLevel::INFO, "Loading Extensions...");
     Common::Extensions::ExtensionManager::AddAll();
-    Common::Extensions::ExtensionManager::AddExtension(new NKHook5::Extensions::StatusEffect::StatusDefinitionsExt());
+    Common::Extensions::ExtensionManager::AddExtension<NKHook5::Extensions::StatusEffect::StatusDefinitionsExt>();
     Print(LogLevel::INFO, "All extensions loaded!");
 
     Print(LogLevel::INFO, "Loading all patches...");

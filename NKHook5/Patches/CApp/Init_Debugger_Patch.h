@@ -3,25 +3,23 @@
 #include "../IPatch.h"
 #include "../../Utils.h"
 
-#undef FindText
-
 namespace NKHook5
 {
     namespace Patches
     {
-        namespace CLoc
+        namespace CApp
         {
-            class FindText : public IPatch
+            class Init_Debugger_Patch: public IPatch
             {
             public:
-                FindText() : IPatch("CLoc::FindText")
+				Init_Debugger_Patch() : IPatch("CApp::Init_Debugger_Patch")
                 {
 
                 }
                 auto Apply() -> bool override;
             };
-        } // namespace CLoc
-
+        } // namespace CDGSplashScreen
+        
     } // namespace Patches
-
+    
 } // namespace NKHook5

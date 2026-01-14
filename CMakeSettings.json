@@ -2,25 +2,37 @@
   "configurations": [
     {
       "name": "x86-Debug",
-      "generator": "Ninja",
+      "generator": "Visual Studio 17 2022",
       "configurationType": "Debug",
       "inheritEnvironments": [ "msvc_x86" ],
       "buildRoot": "${projectDir}\\out\\build\\${name}",
       "installRoot": "${projectDir}\\out\\install\\${name}",
-      "cmakeCommandArgs": "",
+      "cmakeCommandArgs": "-DCMAKE_BUILD_TYPE=Debug",
       "buildCommandArgs": "",
       "ctestCommandArgs": ""
     },
     {
       "name": "x86-Release",
-      "generator": "Ninja",
+      "generator": "Visual Studio 17 2022",
       "configurationType": "Release",
       "buildRoot": "${projectDir}\\out\\build\\${name}",
       "installRoot": "${projectDir}\\out\\install\\${name}",
-      "cmakeCommandArgs": "",
+      "cmakeCommandArgs": "-DCMAKE_BUILD_TYPE=Release",
       "buildCommandArgs": "",
       "ctestCommandArgs": "",
       "inheritEnvironments": [ "msvc_x86" ]
+    },
+    {
+      "name": "x86-RelWithDebInfo",
+      "generator": "Visual Studio 17 2022",
+      "configurationType": "RelWithDebInfo",
+      "buildRoot": "${projectDir}\\out\\build\\${name}",
+      "installRoot": "${projectDir}\\out\\install\\${name}",
+      "cmakeCommandArgs": "-DCMAKE_BUILD_TYPE=Release",
+      "buildCommandArgs": "",
+      "ctestCommandArgs": "",
+      "inheritEnvironments": [ "msvc_x86" ],
+      "variables": []
     }
   ]
 }

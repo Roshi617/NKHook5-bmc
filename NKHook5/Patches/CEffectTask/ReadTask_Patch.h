@@ -1,5 +1,4 @@
-#ifndef NKHOOK5_PATCHES_CLOC_RESOLVEBYID
-#define NKHOOK5_PATCHES_CLOC_RESOLVEBYID
+#pragma once
 
 #include "../IPatch.h"
 #include "../../Utils.h"
@@ -8,20 +7,19 @@ namespace NKHook5
 {
     namespace Patches
     {
-        namespace CLoc
+        namespace CEffectTask
         {
-            class GetText : public IPatch
+            class ReadTask_Patch : public IPatch
             {
             public:
-                GetText() : IPatch("CLoc::GetText")
+                ReadTask_Patch() : IPatch("CEffectTask::ReadTask_Patch")
                 {
 
                 }
                 auto Apply() -> bool override;
             };
-        } // namespace CLoc
+        } // namespace CDGSplashScreen
         
     } // namespace Patches
     
 } // namespace NKHook5
-#endif /* NKHOOK5_PATCHES_CLOC_RESOLVEBYID */

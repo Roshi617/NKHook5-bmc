@@ -1,49 +1,43 @@
-#ifndef NKHOOK5_CLASSES_IBASEPOINTERS
-#define NKHOOK5_CLASSES_IBASEPOINTERS
+#pragma once
 
 #include "Macro.h"
 #include "../../Signatures/Signature.h"
 
-namespace NKHook5
+namespace NKHook5::Classes
 {
-    namespace Classes
-    {
-		using namespace Signatures;
+	using namespace Signatures;
 
-        class IBasePointers
-        {
-		public:
-			class CTextureManager* textureManager;
-			class CTextureLoader* pCTextureLoader; //0x0004
-			class CInput* pCInput; //0x0008
-			class CApp* pCApp; //0x000C
-			class IFontImporter* pIFontImporter; //0x0010
-			class CBaseFileIO* pCBaseFileIO; //0x0014
-			class CScreenManager* pCScreenManager; //0x0018
-			class CSoundManager* pCSoundManager; //0x001C
-			class CMusicManager* pCMusicManager; //0x0020
-			char pad_0024[4]; //0x0024
-			class SteamStoreInterface* pSteamStoreInterface; //0x0028
-			class CSteamInterface* pCSteamInterface; //0x002C
-			char pad_0030[4]; //0x0030
-			class CLicensing* pCLicensing; //0x0034
-			char pad_0038[16]; //0x0038
-			class CFacebookInterface* pCFacebookInterface; //0x0048
-			class CEveryplayInterface* pCEveryplayInterface; //0x004C
-			class CCurlHttpRequestManager* pCCurlHttpRequestManager; //0x0050
-			char pad_0054[8]; //0x0054
-			class CLoc* pCLoc; //0x005C
-			char pad_0060[12]; //0x0060
+	class IBasePointers
+	{
+	public:
+		class CTextureManager* mTextureManager = nullptr; //0x0000
+		class CTextureLoader* mTextureLoader = nullptr; //0x0004
+		class CInput* mInput = nullptr; //0x0008
+		class CApp* mApp = nullptr; //0x000C
+		class IFontImporter* mFontImporter = nullptr; //0x0010
+		class CBaseFileIO* mBaseFileIO = nullptr; //0x0014
+		class CScreenManager* mScreenManager = nullptr; //0x0018
+		class CSoundManager* mSoundManager = nullptr; //0x001C
+		class CMusicManager* mMusicManager = nullptr; //0x0020
+		char pad_0024[4]; //0x0024
+		class SteamStoreInterface* mStoreInterface = nullptr; //0x0028
+		class CSteamInterface* mAchievementInterface = nullptr; //0x002C
+		char pad_0030[4]; //0x0030
+		class CLicensing* mLicensing = nullptr; //0x0034
+		char pad_0038[12]; //0x0038
+		class CFacebookInterface* mFacebookInterface = nullptr; //0x0044
+		class CEveryplayInterface* mEveryplayInterface = nullptr; //0x0048
+		class CCurlHttpRequestManager* mCurlHttpRequestManager = nullptr; //0x004C
+		char pad_0050[8]; //0x0050
+		class CLoc* mLoc = nullptr; //0x0058
+		char pad_005C[16]; //0x005C
 
-		public:
-			IBasePointers() {
-				ThisCall<void, IBasePointers*>(Sigs::IBasePointers_CCTOR, this);
-			};
-        };
 
-		static_assert(sizeof(IBasePointers) == 0x006C);
-    } // namespace Classes
-    
-} // namespace NKHook5
+	public:
+		IBasePointers() {
+			ThisConstruct<Sigs::IBasePointers_CCTOR>(this);
+		};
+	};
 
-#endif /* NKHOOK5_CLASSES_IBASEPOINTERS */
+	static_assert(sizeof(IBasePointers) == 0x006C);
+} // namespace NKHook5::Classes

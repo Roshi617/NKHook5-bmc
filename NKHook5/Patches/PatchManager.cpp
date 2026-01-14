@@ -1,7 +1,10 @@
 #include "PatchManager.h"
 #include <iostream>
 
+
+//#include "CApp/Init_Debugger_Patch.h"
 //#include "CApplyStatusEffectTask/Fire.h"
+
 #include "CBaseFileIO/FileExists.h"
 #include "CBaseFileIO/OpenFile.h"
 #include "CBasePositionableObject/Constructor.h"
@@ -13,12 +16,12 @@
 #include "CCollectableTask/Clone.h"
 #include "CCollectableTask/Update.h"
 #include "CDGSplashScreen/Init.h"
+#include "CEffectTask/FireAt.h"
+#include "CEffectTask/ReadTask_Patch.h"
 #include "CFlagStringConvertor/FlagToString.h"
 #include "CFlagStringConvertor/LoadCategory.h"
 #include "CFlagStringConvertor/StringToFlag.h"
 //#include "CGameScreen/Init.h"
-#include "CLoc/FindText.h"
-#include "CLoc/GetText.h"
 #include "CPlayerProfileV1/InternalLoad.h"
 #include "CPlayerProfileV1/Save.h"
 #include "CProjectile/Clone.h"
@@ -28,12 +31,12 @@
 #include "CSettingsScreen/Process.h"
 #include "CTextureManager/GetSpriteInfoPtr.h"
 #include "CTowerFactory/Constructor.h"
-#include "CTowerFactory/GetTowerInfo.h"
 #include "CTowerFactory/GetTowerName.h"
 #include "CWeapon/Fire.h"
 #include "CWeaponFactory/Constructor.h"
 #include "CWeaponFactory/ParseTask.h"
 #include "CZipFile/LoadFrom.h"
+#include "C_GameSFXManager/Play.h"
 #include "GLRenderLayer/Draw.h"
 #include "OpenGL/Swapbuffers.h"
 #include "Screens/GetScreenForParadigm.h"
@@ -45,10 +48,13 @@ using namespace NKHook5::Patches;
 
 void PatchManager::ApplyAll()
 {
+
+    //PatchManager::ApplyPatch(new CApp::Init_Debugger_Patch());
     //PatchManager::ApplyPatch(new CApplyStatusEffectTask::Fire());
+
     PatchManager::ApplyPatch(new CBaseFileIO::FileExists());
     PatchManager::ApplyPatch(new CBaseFileIO::OpenFile());
-    PatchManager::ApplyPatch(new CBasePositionableObject::Constructor());
+    //PatchManager::ApplyPatch(new CBasePositionableObject::Constructor());
     PatchManager::ApplyPatch(new CBloon::Update());
     PatchManager::ApplyPatch(new CBloonFactory::Constructor());
     PatchManager::ApplyPatch(new CBloonsBaseScreen::Init());
@@ -56,13 +62,13 @@ void PatchManager::ApplyAll()
     PatchManager::ApplyPatch(new CBloonsTD5Game::LoadAssets());
     PatchManager::ApplyPatch(new CCollectableTask::Clone());
     PatchManager::ApplyPatch(new CCollectableTask::Update());
-    PatchManager::ApplyPatch(new CDGSplashScreen::Init());
+	PatchManager::ApplyPatch(new CDGSplashScreen::Init());
+	PatchManager::ApplyPatch(new CEffectTask::FireAt());
+    PatchManager::ApplyPatch(new CEffectTask::ReadTask_Patch());
     PatchManager::ApplyPatch(new CFlagStringConvertor::FlagToString());
     PatchManager::ApplyPatch(new CFlagStringConvertor::LoadCategory());
     PatchManager::ApplyPatch(new CFlagStringConvertor::StringToFlag());
     //PatchManager::ApplyPatch(new CGameScreen::Init());
-    PatchManager::ApplyPatch(new CLoc::FindText());
-    PatchManager::ApplyPatch(new CLoc::GetText());
     PatchManager::ApplyPatch(new CPlayerProfileV1::InternalLoad());
     //PatchManager::ApplyPatch(new CPlayerProfileV1::Save());
     PatchManager::ApplyPatch(new CProjectile::Clone());
@@ -72,17 +78,17 @@ void PatchManager::ApplyAll()
     //PatchManager::ApplyPatch(new CSettingsScreen::Process());
     PatchManager::ApplyPatch(new CTextureManager::GetSpriteInfoPtr());
     PatchManager::ApplyPatch(new CTowerFactory::Constructor());
-    PatchManager::ApplyPatch(new CTowerFactory::GetTowerInfo());
     //PatchManager::ApplyPatch(new CTowerFactory::GetTowerName());
     //PatchManager::ApplyPatch(new CWeapon::Fire());
     PatchManager::ApplyPatch(new CWeaponFactory::Constructor());
     PatchManager::ApplyPatch(new CWeaponFactory::ParseTask());
     PatchManager::ApplyPatch(new CZipFile::LoadFrom());
+    PatchManager::ApplyPatch(new C_GameSFXManager::Play());
     //PatchManager::ApplyPatch(new GLRenderLayer::Draw());
     PatchManager::ApplyPatch(new OpenGL::Swapbuffers());
     PatchManager::ApplyPatch(new Screens::GetScreenForParadigm());
     PatchManager::ApplyPatch(new Unknown::CrtMalloc());
-    PatchManager::ApplyPatch(new Unknown::GetDeltaLock60FPS());
+    //PatchManager::ApplyPatch(new Unknown::GetDeltaLock60FPS());
     PatchManager::ApplyPatch(new Unknown::WinMain());
 }
 

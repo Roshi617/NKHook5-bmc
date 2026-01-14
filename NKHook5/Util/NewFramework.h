@@ -7,8 +7,11 @@
 
 #include "../Classes/Macro.h"
 #include "../Signatures/Signature.h"
+
 #include <list>
 #include <map>
+#include <set>
+#include <vector>
 
 void* newframework_crt_malloc(size_t size);
 void newframework_crt_free(void* ptr);
@@ -16,12 +19,12 @@ void newframework_crt_free(void* ptr);
 #define malloc(size) newframework_crt_malloc(size)
 #define free(ptr) newframework_crt_free(ptr)
 
-#define GHSTL_MALLOC(size) malloc(size)
-#define GHSTL_FREE(ptr) free(ptr)
-
-#define overload_new \
+#define overload_allocators \
     void* operator new(size_t size) { \
         return newframework_crt_malloc(size); \
+    };                      \
+	void operator delete(void* ptr) { \
+        return newframework_crt_free(ptr); \
     };
 
 namespace nfw {
@@ -113,6 +116,9 @@ namespace nfw {
     template<typename T>
     using list = std::list<T, newframework_allocator<T>>;
 
+	template<typename T>
+	using set = std::set<T, newframework_allocator<T>>;
+
     template<typename T>
     using basic_string_view = std::basic_string_view<T, newframework_allocator<T>>;
     template<typename T>
@@ -120,4 +126,7 @@ namespace nfw {
 
     using string = basic_string<char>;
     using string_view = basic_string_view<char>;
+
+	template<typename T>
+	using vector = std::vector<T, newframework_allocator<T>>;
 }

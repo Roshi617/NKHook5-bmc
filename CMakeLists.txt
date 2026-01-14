@@ -3,6 +3,17 @@ project(NKHook5 VERSION 1.0 LANGUAGES CXX)
 
 include(FetchContent)
 set(CMAKE_CXX_STANDARD 23)
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} /MP")
+
+# Only Visual Studio platforms are supported
+if (NOT CMAKE_GENERATOR_PLATFORM STREQUAL Win32)
+    message(FATAL_ERROR "NKHook5 can only be built on Win32 using the Visual Studio 17 2022 or newer generator.")
+endif ()
+
+message("BUILD_TYPE: ${CMAKE_BUILD_TYPE}")
+if (NOT (CMAKE_BUILD_TYPE STREQUAL "Debug" OR CMAKE_BUILD_TYPE STREQUAL "Release"))
+    message(FATAL_ERROR "NKHook5 can only be built in Debug or Release mode.")
+endif()
 
 #Get the git diff ID thing and make a compile def for it
 EXECUTE_PROCESS(
@@ -12,7 +23,7 @@ EXECUTE_PROCESS(
       ERROR_QUIET
       OUTPUT_STRIP_TRAILING_WHITESPACE)
 
-add_compile_definitions(NKHOOK_BUILD_TAG=0.10.0)
+add_compile_definitions(NKHOOK_BUILD_TAG=0.10.2)
 add_compile_definitions(NKHOOK_BUILD_VERSION=${NKHOOK_BUILD_VERSION})
 add_compile_definitions(_ITERATOR_DEBUG_LEVEL=0)
 add_compile_options(/openmp)
@@ -22,6 +33,7 @@ if(MSVC)
             $<$<CONFIG:>:/MT> #---------|
             $<$<CONFIG:Debug>:/MTd> #---|-- Statically link the runtime libraries
             $<$<CONFIG:Release>:/MT> #--|
+            $<$<CONFIG:RelWithDebInfo>:/MT> #--|
     )
 endif()
 
@@ -29,24 +41,13 @@ endif()
 FetchContent_Declare(
     plh
     GIT_REPOSITORY https://github.com/stevemk14ebr/PolyHook_2_0.git
-    GIT_TAG 4d1b3e3fe258d1d30fce91f4b360ce88da96d332
+    GIT_TAG e8d33f54f9d11943f86fc326dae31dcc8ea7c389
 )
 FetchContent_GetProperties(plh)
 if(NOT plh_POPULATED)
     FetchContent_Populate(plh)
     set(POLYHOOK_BUILD_DLL ON)
     add_subdirectory(${plh_SOURCE_DIR} ${plh_BINARY_DIR})
-endif()
-
-FetchContent_Declare(
-    ghstl
-    GIT_REPOSITORY https://github.com/DisabledMallis/GHSTL.git
-    GIT_TAG main
-)
-FetchContent_GetProperties(ghstl)
-if(NOT ghstl_POPULATED)
-    FetchContent_Populate(ghstl)
-    add_subdirectory(${ghstl_SOURCE_DIR} ${ghstl_BINARY_DIR})
 endif()
 
 FetchContent_Declare(
@@ -101,6 +102,48 @@ if(NOT binpack_POPULATED)
     FetchContent_Populate(binpack)
     add_library(binpack INTERFACE)
     target_include_directories(binpack INTERFACE ${binpack_SOURCE_DIR})
+endif()
+
+FetchContent_Declare(
+    libhat
+    GIT_REPOSITORY https://github.com/BasedInc/libhat.git
+    GIT_TAG master
+)
+FetchContent_GetProperties(libhat)
+if(NOT libhat_POPULATED)
+    FetchContent_Populate(libhat)
+    message("${libhat_SOURCE_DIR}")
+    message("${libhat_BINARY_DIR}")
+    add_subdirectory(${libhat_SOURCE_DIR} ${libhat_BINARY_DIR})
+endif()
+
+set(BOOST_INCLUDE_LIBRARIES config container intrusive smart_ptr spirit variant)
+set(BOOST_ENABLE_CMAKE ON)
+FetchContent_Declare(
+    Boost
+    GIT_REPOSITORY https://github.com/boostorg/boost.git
+    GIT_TAG boost-1.80.0
+    OVERRIDE_FIND_PACKAGE
+)
+FetchContent_MakeAvailable(Boost)
+set(Boost_INCLUDE_DIR ${Boost_SOURCE_DIR})
+set(Boost_ROOT ${Boost_SOURCE_DIR})
+
+FetchContent_Declare(
+        jsonspirit
+        GIT_REPOSITORY https://github.com/png85/json_spirit.git
+        GIT_TAG master
+)
+FetchContent_GetProperties(jsonspirit)
+if(NOT jsonspirit_POPULATED)
+    FetchContent_Populate(jsonspirit)
+    set(BUILD_STATIC_LIBRARIES ON)
+    set(BUILD_STATIC_LIBS ON)
+    set(JSON_SPIRIT_DEMOS OFF)
+    set(JSON_SPIRIT_TESTS OFF)
+    add_subdirectory(${jsonspirit_SOURCE_DIR} ${jsonspirit_BINARY_DIR})
+    target_include_directories(json_spirit PUBLIC ${jsonspirit_SOURCE_DIR})
+    target_link_libraries(json_spirit PRIVATE Boost::config Boost::smart_ptr Boost::spirit Boost::variant)
 endif()
 
 add_subdirectory(Common)
